@@ -5,7 +5,8 @@ env.workspace = r"C:/users/wfcla/Desktop/Classification_Automation"
 
 env.overwriteOutput = True  
   
-buildings = "allbuildings_footprints"
+multipatch = "AllBuildings"
+buildings = "building_footprints"
 
 slr1 = "SLR1"
 slr2 = "SLR2"
@@ -31,7 +32,7 @@ cat_temp3 = 'cat_temp3'
 cat_temp4 = 'cat_temp4'
 cat_temp5 = 'cat_temp5'
 
-#arcpy.MultiPatchFootprint_3d('Allbuildings', 'Allbuildings_fp.shp') 
+arcpy.MultiPatchFootprint_3d(multipatch, buildings) 
 
 # Add field allbuildings_footprints 
 
@@ -42,21 +43,17 @@ arcpy.AddField_management(buildings,"PerSLR3", "Double")
 arcpy.AddField_management(buildings,"area", "Double")
 
 
+buildings_fields = ["FID", "SLR", "SLRarea", "PerSLR3", "Area"]
+temp_fields = ["FID_buildi", "SLRarea"]
+
 
 #start of slr and cat analysis for field classifcation of exposure
 
-buildings_fields = ["FID", "SLR", "SLRarea", "PerSLR3", "Area"]
-temp_fields = ["FID_allbui", "SLRarea"]
 
 with arcpy.da.UpdateCursor(buildings, ["SHAPE@AREA", "area"]) as cursor:
     for row in cursor:
-        row[0] = row[1]
+        row[1] = row[0]
         cursor.updateRow(row)
-
-
-
-
-
 
 
 arcpy.Intersect_analysis([buildings,slr5], slr_temp5) 
@@ -89,15 +86,6 @@ for row in cur:
 		if row[0] == row2[0]:
 			row2[2] = row[1]
 		cur2.updateRow(row2)
-
-
-
-
-
-
-
-
-
 
 
 
@@ -283,17 +271,12 @@ for row in cur:
 		cur2.updateRow(row2)
 
 
-arcpy.AddField_management (file, "area", "FLOAT")
-
-with arcpy.da.UpdateCursor(file, ["SHAPE@AREA", "area"]) as cursor:
-    for row in cursor:
-        row[1] = row[0]
-        cursor.updateRow(row)
-
-
 
 arcpy.Delete_management("cat_temp1")  
 arcpy.Delete_management("cat_temp2")  
 arcpy.Delete_management("cat_temp3")  
 arcpy.Delete_management("cat_temp4")  
 arcpy.Delete_management("cat_temp5")  
+
+
+#Begin clip shape analysis
