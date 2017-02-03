@@ -47,10 +47,6 @@ temp_fields = ["FID_allbui", "SLRarea"]
 
 
 
-
-
-
-
 arcpy.Intersect_analysis([buildings,slr5], slr_temp5) 
 
 with arcpy.da.UpdateCursor(slr_temp5, ["SHAPE@AREA", "SLRarea"]) as cursor:
@@ -73,6 +69,15 @@ for row in cur:
 		if row[0] == row2[0]:
 			row2[2] = row[1]
 		cur2.updateRow(row2)
+
+cur = arcpy.da.SearchCursor(slr_temp5, temp_fields)
+for row in cur:
+	cur2 = arcpy.da.UpdateCursor(buildings, buildings_fields)
+	for row2 in cur2:
+		if row[0] == row2[0]:
+			row2[2] = row[1]
+		cur2.updateRow(row2)
+
 
 
 
@@ -128,7 +133,7 @@ for row in cur:
 			row2[1] = '3'
 		cur2.updateRow(row2)
 
-with arcpy.da.UpdateCursor(slr_temp3S, ["SHAPE@AREA", "SLRarea"]) as cursor:
+with arcpy.da.UpdateCursor(slr_temp3, ["SHAPE@AREA", "SLRarea"]) as cursor:
     for row in cursor:
         row[1] = row[0]
         cursor.updateRow(row)
@@ -248,7 +253,8 @@ for row in cur:
 		if row[0] == row2[0]:
 			row2[1] = '3'
 		cur2.updateRow(row2)
-		
+
+
 
 arcpy.Intersect_analysis([buildings,cat2], cat_temp2) 
 
@@ -261,6 +267,8 @@ for row in cur:
 		cur2.updateRow(row2)
 
 
+
+
 arcpy.Intersect_analysis([buildings,cat1], cat_temp1) 
 
 cur = arcpy.da.SearchCursor(cat_temp1, temp_fields)
@@ -270,6 +278,20 @@ for row in cur:
 		if row[0] == row2[0]:
 			row2[1] = '1'
 		cur2.updateRow(row2)
+
+
+
+arcpy.AddField_management (file, "area", "FLOAT")
+
+with arcpy.da.UpdateCursor(file, ["SHAPE@AREA", "area"]) as cursor:
+    for row in cursor:
+        row[1] = row[0]
+        cursor.updateRow(row)
+
+
+
+
+
 
 
 arcpy.Delete_management("cat_temp1")  
