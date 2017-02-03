@@ -39,11 +39,23 @@ arcpy.AddField_management(buildings, "Category", "Double")
 arcpy.AddField_management(buildings, "SLR", "Double")  
 arcpy.AddField_management(buildings, "SLRarea", "Double")
 arcpy.AddField_management(buildings,"PerSLR3", "Double")
+arcpy.AddField_management(buildings,"area", "Double")
+
+
 
 #start of slr and cat analysis for field classifcation of exposure
 
-buildings_fields = ["FID", "SLR", "SLRarea", "PerSLR3"]
+buildings_fields = ["FID", "SLR", "SLRarea", "PerSLR3", "Area"]
 temp_fields = ["FID_allbui", "SLRarea"]
+
+with arcpy.da.UpdateCursor(buildings, ["SHAPE@AREA", "area"]) as cursor:
+    for row in cursor:
+        row[0] = row[1]
+        cursor.updateRow(row)
+
+
+
+
 
 
 
@@ -138,6 +150,7 @@ with arcpy.da.UpdateCursor(slr_temp3, ["SHAPE@AREA", "SLRarea"]) as cursor:
         row[1] = row[0]
         cursor.updateRow(row)
         
+
 cur = arcpy.da.SearchCursor(slr_temp3, temp_fields)
 for row in cur:
 	cur2 = arcpy.da.UpdateCursor(buildings, buildings_fields)
@@ -147,12 +160,13 @@ for row in cur:
 		cur2.updateRow(row2)
 
 
-
-
-
-
-
-
+cur = arcpy.da.SearchCursor(slr_temp3, temp_fields)
+for row in cur:
+	cur2 = arcpy.da.UpdateCursor(buildings, buildings_fields)
+	for row2 in cur2:
+		if row[0] == row2[0]:
+			row2[3] = row[1]/row2[4]
+		cur2.updateRow(row2)
 
 
 arcpy.Intersect_analysis([buildings,slr2], slr_temp2) 
@@ -178,9 +192,6 @@ for row in cur:
 		if row[0] == row2[0]:
 			row2[2] = row[1]
 		cur2.updateRow(row2)
-
-
-
 
 
 arcpy.Intersect_analysis([buildings,slr1], slr_temp1) 
@@ -213,12 +224,6 @@ arcpy.Delete_management("slr_temp2")
 arcpy.Delete_management("slr_temp3")  
 arcpy.Delete_management("slr_temp4")  
 arcpy.Delete_management("slr_temp5")  
-
-
-
-
-
-
 
 		
 arcpy.Intersect_analysis([buildings,cat5], cat_temp5) 
@@ -267,8 +272,6 @@ for row in cur:
 		cur2.updateRow(row2)
 
 
-
-
 arcpy.Intersect_analysis([buildings,cat1], cat_temp1) 
 
 cur = arcpy.da.SearchCursor(cat_temp1, temp_fields)
@@ -280,17 +283,12 @@ for row in cur:
 		cur2.updateRow(row2)
 
 
-
 arcpy.AddField_management (file, "area", "FLOAT")
 
 with arcpy.da.UpdateCursor(file, ["SHAPE@AREA", "area"]) as cursor:
     for row in cursor:
         row[1] = row[0]
         cursor.updateRow(row)
-
-
-
-
 
 
 
