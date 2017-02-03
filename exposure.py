@@ -297,6 +297,3 @@ arcpy.Delete_management("cat_temp2")
 arcpy.Delete_management("cat_temp3")  
 arcpy.Delete_management("cat_temp4")  
 arcpy.Delete_management("cat_temp5")  
-
-
-#Begin clip shape analysis
