@@ -85,8 +85,10 @@ arcpy.AddField_management(buildings,"area", "Double")
 
 
 
-buildings_fields = ["FID", "SLR", "SLRarea", "PerSLR3", "Area"]
-multipatch_fields = ["OBJECTID", "SLR", "SLRarea", "PerSLR3", "Area"]
+buildings_fields = ["FID", "SLR", "SLRarea", "PerSLR3", "Category", "Area"]
+
+multipatch_fields = ["OBJECTID", "SLR", "SLRarea", "PerSLR3", "Category", "Area"]
+
 temp_fields = ["FID_buildi", "SLRarea"]
 
 
@@ -277,7 +279,7 @@ for row in cur:
 	cur2 = arcpy.da.UpdateCursor(buildings, buildings_fields)
 	for row2 in cur2:
 		if row[0] == row2[0]:
-			row2[1] = '5'
+			row2[4] = '5'
 		cur2.updateRow(row2)
 
 
@@ -291,7 +293,7 @@ for row in cur:
 	cur2 = arcpy.da.UpdateCursor(buildings, buildings_fields)
 	for row2 in cur2:
 		if row[0] == row2[0]:
-			row2[1] = '4'
+			row2[4] = '4'
 		cur2.updateRow(row2)
 
 
@@ -305,7 +307,7 @@ for row in cur:
 	cur2 = arcpy.da.UpdateCursor(buildings, buildings_fields)
 	for row2 in cur2:
 		if row[0] == row2[0]:
-			row2[1] = '3'
+			row2[4] = '3'
 		cur2.updateRow(row2)
 
 
@@ -320,7 +322,7 @@ for row in cur:
 	cur2 = arcpy.da.UpdateCursor(buildings, buildings_fields)
 	for row2 in cur2:
 		if row[0] == row2[0]:
-			row2[1] = '2'
+			row2[4] = '2'
 		cur2.updateRow(row2)
 
 
@@ -336,7 +338,7 @@ for row in cur:
 	cur2 = arcpy.da.UpdateCursor(buildings, buildings_fields)
 	for row2 in cur2:
 		if row[0] == row2[0]:
-			row2[1] = '1'
+			row2[4] = '1'
 		cur2.updateRow(row2)
 
 
@@ -387,6 +389,14 @@ for row in cur:
 	for row2 in cur2:
 		if row[0] == row2[0]:
 			row2[4] = row[4]
+		cur2.updateRow(row2)
+
+cur = arcpy.da.SearchCursor(buildings, buildings_fields)
+for row in cur:
+	cur2 = arcpy.da.UpdateCursor(multipatch, multipatch_fields)
+	for row2 in cur2:
+		if row[0] == row2[0]:
+			row2[5] = row[5]
 		cur2.updateRow(row2)
 
 
