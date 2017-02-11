@@ -193,7 +193,7 @@ for row in cur:
 	cur2 = arcpy.da.UpdateCursor(buildings, buildings_fields)
 	for row2 in cur2:
 		if row[0] == row2[0]:
-			row2[3] = row[1]/row2[4]
+			row2[3] = row[1]/row2[5]
 		cur2.updateRow(row2)
 
 
