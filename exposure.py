@@ -1,7 +1,7 @@
 import arcpy
 from arcpy import env  
 
-env.workspace = r"C:/users/wfcla/Desktop/Classification_Automation/data.gdb"  
+env.workspace = r"C:/users/wfcla/Desktop/Classification_Automation/"  
 env.overwriteOutput = True  
   
 multipatch = arcpy.GetParameterAsText(0)
@@ -86,6 +86,7 @@ arcpy.AddField_management(buildings,"area", "Double")
 
 
 buildings_fields = ["FID", "SLR", "SLRarea", "PerSLR3", "Area"]
+multipatch_fields = ["OBJECTID", "SLR", "SLRarea", "PerSLR3", "Area"]
 temp_fields = ["FID_buildi", "SLRarea"]
 
 
@@ -358,31 +359,31 @@ arcpy.Delete_management("temp10")
 
 cur = arcpy.da.SearchCursor(buildings, buildings_fields)
 for row in cur:
-	cur2 = arcpy.da.UpdateCursor(multipatch, buildings_fields)
+	cur2 = arcpy.da.UpdateCursor(multipatch, multipatch_fields)
 	for row2 in cur2:
 		if row[0] == row2[0]:
 			row2[1] = row[1]
 		cur2.updateRow(row2)
 
-cur = arcpy.da.SearchCursor(buildings, temp_fields)
+cur = arcpy.da.SearchCursor(buildings, buildings_fields)
 for row in cur:
-	cur2 = arcpy.da.UpdateCursor(multipatch, buildings_fields)
+	cur2 = arcpy.da.UpdateCursor(multipatch, multipatch_fields)
 	for row2 in cur2:
 		if row[0] == row2[0]:
 			row2[2] = row[2]
 		cur2.updateRow(row2)
 
-cur = arcpy.da.SearchCursor(buildings, temp_fields)
+cur = arcpy.da.SearchCursor(buildings, buildings_fields)
 for row in cur:
-	cur2 = arcpy.da.UpdateCursor(multipatch, buildings_fields)
+	cur2 = arcpy.da.UpdateCursor(multipatch, multipatch_fields)
 	for row2 in cur2:
 		if row[0] == row2[0]:
 			row2[3] = row[3]
 		cur2.updateRow(row2)
 
-cur = arcpy.da.SearchCursor(buildings, temp_fields)
+cur = arcpy.da.SearchCursor(buildings, buildings_fields)
 for row in cur:
-	cur2 = arcpy.da.UpdateCursor(multipatch, buildings_fields)
+	cur2 = arcpy.da.UpdateCursor(multipatch, multipatch_fields)
 	for row2 in cur2:
 		if row[0] == row2[0]:
 			row2[4] = row[4]
