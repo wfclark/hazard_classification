@@ -36,26 +36,6 @@ slr_temp5 = arcpy.CreateScratchName("temp5",
                                        data_type="Shapefile",
                                        workspace=arcpy.env.scratchFolder)
 
-cat_temp1 = arcpy.CreateScratchName("temp6",
-                                       data_type="Shapefile",
-                                       workspace=arcpy.env.scratchFolder)
-
-cat_temp2 = arcpy.CreateScratchName("temp7",
-                                       data_type="Shapefile",
-                                       workspace=arcpy.env.scratchFolder)
-
-cat_temp3 = arcpy.CreateScratchName("tem8",
-                                       data_type="Shapefile",
-                                       workspace=arcpy.env.scratchFolder)
-
-cat_temp4 = arcpy.CreateScratchName("temp9",
-                                       data_type="Shapefile",
-                                       workspace=arcpy.env.scratchFolder)
-
-cat_temp5 = arcpy.CreateScratchName("temp10",
-                                       data_type="Shapefile",
-                                       workspace=arcpy.env.scratchFolder)
-
 
 arcpy.MultiPatchFootprint_3d(multipatch, buildings)
 
@@ -80,9 +60,9 @@ arcpy.AddField_management(buildings,"area", "Double")
 
 
 
-buildings_fields = ["FID", "SLR", "SLRarea", "PerSLR3", "Category", "Area"]
+buildings_fields = ["FID", "SLR", "SLRarea", "PerSLR3", "Area"]
 
-multipatch_fields = ["OBJECTID", "SLR", "SLRarea", "PerSLR3", "Category", "Area"]
+multipatch_fields = ["OBJECTID", "SLR", "SLRarea", "PerSLR3",  "Area"]
 
 temp_fields = ["FID_buildi", "SLRarea"]
 
@@ -176,7 +156,7 @@ for row in cur:
 	cur2 = arcpy.da.UpdateCursor(buildings, buildings_fields)
 	for row2 in cur2:
 		if row[0] == row2[0]:
-			row2[3] = row[1]/row2[5]
+			row2[3] = row[1]/row2[4]
 		cur2.updateRow(row2)
 
 
@@ -261,19 +241,12 @@ for row in cur:
 			row2[3] = row[3]
 		cur2.updateRow(row2)
 
-cur = arcpy.da.SearchCursor(buildings, buildings_fields)
-for row in cur:
-	cur2 = arcpy.da.UpdateCursor(multipatch, multipatch_fields)
-	for row2 in cur2:
-		if row[0] == row2[0]:
-			row2[4] = row[4]
-		cur2.updateRow(row2)
 
 cur = arcpy.da.SearchCursor(buildings, buildings_fields)
 for row in cur:
 	cur2 = arcpy.da.UpdateCursor(multipatch, multipatch_fields)
 	for row2 in cur2:
 		if row[0] == row2[0]:
-			row2[5] = row[5]
+			row2[4] = row[4]
 		cur2.updateRow(row2)
 
