@@ -4,25 +4,12 @@ ESRI ArcPro tools that are written in ArcPy that classifies the amount of exposu
 
 # Usage Intructions
 
-## For sea level rise 
-
-Download SLR_Exposure_10.tbx 
+Clone this REPO
 
 Right click toolbox and add new toolbox 
 
-Type in the names of your SLR Layers and building layers
+Open your newly imported toolbox 
 
-## For storm surge
+Type in the names of your hazard and building layers (inputs are case sensitives)
 
-Download SS_Exposure_10.tbx
-
-Type in the names of your CAT layers and building layer
-
-
-## Intricacies 
-
-Make sure all shapefiles are in the same projection
-
-Make sure all layers are turned off
-
-Clear selected features
+Click Run 
