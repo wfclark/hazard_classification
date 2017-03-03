@@ -18,4 +18,8 @@ Download SS_Exposure_10.tbx
 
 Type in the names of your CAT layers and building layer
 
+
+##Intricacies 
 **Make sure all shapefiles are in the same projection**
+**Make sure all layers are turned off**
+**Clear selected features**
