@@ -1,5 +1,5 @@
 # Description
-This is an ESRI ArcPro tool that is written in ArcPy that classifies the amount of exposure to Sea Level Rise and Hurricane Saffir-Simpson Category based Storm Surge 
+ESRI ArcPro tools that are written in ArcPy that classifies the amount of exposure to Sea Level Rise and Hurricane Saffir-Simpson Category based Storm Surge. These tools can easily be imported into ArcMap or ArcPro using the instructions below.
 
 
 # Usage Intructions
