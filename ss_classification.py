@@ -11,6 +11,11 @@ buildings = arcpy.CreateScratchName("building_footprints",
                                        workspace=arcpy.env.scratchFolder)
 
 slr1 = arcpy.GetParameterAsText(1)
+slr2 = arcpy.GetParameterAsText(2)
+slr3 = arcpy.GetParameterAsText(3)
+slr4 = arcpy.GetParameterAsText(4)
+slr5 = arcpy.GetParameterAsText(5)
+
 
 
 cat_temp1 = arcpy.CreateScratchName("temp1",
@@ -47,8 +52,6 @@ arcpy.AddField_management(buildings, "Category", "Double")
 buildings_fields = ["FID", "Category"]
 
 multipatch_fields = ["OBJECTID", "Category"]
-
-temp_fields = ["FID_buildi", "SLRarea"]
 
 
 arcpy.Intersect_analysis([buildings,cat5], cat_temp5) 
