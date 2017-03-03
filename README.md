@@ -16,6 +16,6 @@ Type in the names of your SLR Layers and building layers
 
 Download SS_Exposure_10.tbx
 
-Type in the names of your CAT layers and building layers
+Type in the names of your CAT layers and building layer
 
-
+**Make sure all shapefiles are in the same projection**
