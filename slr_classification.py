@@ -17,6 +17,7 @@ slr4 = arcpy.GetParameterAsText(4)
 slr5 = arcpy.GetParameterAsText(5)
 
 
+
 slr_temp1 = arcpy.CreateScratchName("temp1",
                                        data_type="Shapefile",
                                        workspace=arcpy.env.scratchFolder)
@@ -37,6 +38,7 @@ slr_temp5 = arcpy.CreateScratchName("temp5",
                                        workspace=arcpy.env.scratchFolder)
 
 
+
 arcpy.MultiPatchFootprint_3d(multipatch, buildings)
 
 # Add field allbuildings_footprints 
@@ -50,7 +52,6 @@ arcpy.AddField_management(multipatch,"area", "Double")
 
 
 
-
 arcpy.AddField_management(buildings, "SLR", "Double")  
 arcpy.AddField_management(buildings, "SLRarea", "Double")
 arcpy.AddField_management(buildings,"PerSLR3", "Double")
@@ -60,9 +61,9 @@ arcpy.AddField_management(buildings,"area", "Double")
 
 
 
-buildings_fields = ["FID", "SLR", "SLRarea", "PerSLR3", "Area"]
+buildings_fields = ["FID", "SLR", "SLRarea", "PerSLR3",  "Area"]
 
-multipatch_fields = ["OBJECTID", "SLR", "SLRarea", "PerSLR3",  "Area"]
+multipatch_fields = ["OBJECTID", "SLR", "SLRarea", "PerSLR3", "Area"]
 
 temp_fields = ["FID_buildi", "SLRarea"]
 
@@ -126,6 +127,7 @@ for row in cur:
 
 
 
+
 arcpy.Intersect_analysis([buildings,slr3], slr_temp3) 
 
 cur = arcpy.da.SearchCursor(slr_temp3, temp_fields)
@@ -160,7 +162,6 @@ for row in cur:
 		cur2.updateRow(row2)
 
 
-
 arcpy.Intersect_analysis([buildings,slr2], slr_temp2) 
 
 cur = arcpy.da.SearchCursor(slr_temp2, temp_fields)
@@ -186,6 +187,7 @@ for row in cur:
 		cur2.updateRow(row2)
 
 
+
 arcpy.Intersect_analysis([buildings,slr1], slr_temp1) 
 
 cur = arcpy.da.SearchCursor(slr_temp1, temp_fields)
@@ -209,12 +211,15 @@ for row in cur:
 		if row[0] == row2[0]:
 			row2[2] = row[1]
 		cur2.updateRow(row2)
-    
+
+
+
 arcpy.Delete_management("temp1")
 arcpy.Delete_management("temp2")  
 arcpy.Delete_management("temp3")  
 arcpy.Delete_management("temp4")  
 arcpy.Delete_management("temp5")  
+
 
 
 cur = arcpy.da.SearchCursor(buildings, buildings_fields)
@@ -249,4 +254,10 @@ for row in cur:
 		if row[0] == row2[0]:
 			row2[4] = row[4]
 		cur2.updateRow(row2)
+
+
+
+
+#Begin clip shape analysis
+
 
