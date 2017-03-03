@@ -1,10 +1,10 @@
-## Description
+# Description
 This is an ESRI ArcPro tool that is written in ArcPy that classifies the amount of exposure to Sea Level Rise and Hurricane Saffir-Simpson Category based Storm Surge 
 
 
-## Usage Intructions
+# Usage Intructions
 
-# For sea level rise 
+## For sea level rise 
 
 Download SLR_Exposure_10.tbx 
 
@@ -12,7 +12,7 @@ Right click toolbox and add new toolbox
 
 Type in the names of your SLR Layers and building layers
 
-# For storm surge
+## For storm surge
 
 Download SS_Exposure_10.tbx
 
